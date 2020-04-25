@@ -7,11 +7,6 @@ def hav(theta):
 
 #Calculate between 2 points on earth using longtitude and latitude
 def calc_distance(location1, location2):
-    print("location1:")
-    print(location1[0])
-    print(location1[1])
-    print(location2[0])
-    print(location2[1])
     r = 6378.1
     distance = 2 * r * math.asin(math.sqrt(hav(location2[0]-location1[0]) + math.cos(location1[0]) * math.cos(location2[0]) * hav(location2[1]-location1[1])))
 
