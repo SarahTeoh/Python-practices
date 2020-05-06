@@ -15,6 +15,7 @@ def calc_distance(location1, location2):
 def main():
     #Read data from csv file
     loc_df = pd.read_csv('locations.csv')
+    
     #Convert to dictionaty
     loc_dict = loc_df.set_index('name').T.apply(tuple).to_dict()
 

@@ -39,34 +39,45 @@ def main():
 		standardized_height = standardize(list(zip(*chosen_data))[0])
 		standardized_weight = standardize(list(zip(*chosen_data))[1])
 	else:
-		print("Please insert only female of male")
+		print("Please insert only female of male without a space")
 
 	#Plot graph
 	fig = plt.figure()
+	fig.set_figheight(15)
+	fig.set_figwidth(25)
 
 	#Top left
-	before_standardization_height = fig.add_subplot(2, 2, 1)
+	before_standardization_height = fig.add_subplot(2, 3, 1)
+	if gender == "female":
+		before_standardization_height.scatter(*zip(*chosen_data), c='green', alpha=0.3, label='Female')
+	elif gender == "male":
+		before_standardization_height.scatter(*zip(*chosen_data), c='green', alpha=0.3, label='Male')
+	before_standardization_height.set_xlabel("Height")
+	before_standardization_height.set_ylabel("Weight")
+	before_standardization_height.legend()
+
+	before_standardization_height = fig.add_subplot(2, 3, 2)
 	before_standardization_height.hist(list(zip(*chosen_data))[0], color='red', alpha=0.5, label='Before Standarize Height')
 	before_standardization_height.set_xlabel("Height")
 	before_standardization_height.set_ylabel("Num of People")
 	before_standardization_height.legend()
 
 	#Top right
-	before_standardization_weight = fig.add_subplot(2, 2, 2)
+	before_standardization_weight = fig.add_subplot(2, 3, 3)
 	before_standardization_weight.hist(list(zip(*chosen_data))[1], color='red', alpha=0.5, label='Before Standarize Weight')
 	before_standardization_weight.set_xlabel("Weight")
 	before_standardization_weight.set_ylabel("Num of People")
 	before_standardization_weight.legend()
 
 	#Bottom left
-	after_standardization_height = fig.add_subplot(2, 2, 3)
+	after_standardization_height = fig.add_subplot(2, 3, 5)
 	after_standardization_height.hist(standardized_height, color='blue', alpha=0.5, label='After Standarized Height')
 	after_standardization_height.set_xlabel("Height")
 	after_standardization_height.set_ylabel("Num of People")
 	after_standardization_height.legend()
 
 	#Bottom right
-	after_standardization_weight = fig.add_subplot(2, 2, 4)
+	after_standardization_weight = fig.add_subplot(2, 3, 6)
 	after_standardization_weight.hist(standardized_weight, color='blue', alpha=0.5, label='After Standarized Weight')
 	after_standardization_weight.set_xlabel("Weight")
 	after_standardization_weight.set_ylabel("Num of People")
