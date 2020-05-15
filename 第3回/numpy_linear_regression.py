@@ -1,4 +1,4 @@
-#課題4-4
+#課題4-5
 import csv
 import pandas as pd
 import random
@@ -18,15 +18,12 @@ def calc_mse(height_array, weight_array, a, b):
 	return mse
 
 def renew_paramaters(height_array, weight_array, initial_a, initial_b, learning_rate):
-	a = initial_a
-	b = initial_b
-	list_for_a = [height * ((a * height + b) - weight_array[height_array.index(height)]) for height in height_array]
-	list_for_b = [(a * height + b) - weight_array[height_array.index(height)] for height in height_array]
-	differentiated_a = sum(list_for_a) / len(height_array)
-	differentiated_b = sum(list_for_b) / len(height_array)
-	a -= learning_rate * differentiated_a
-	b -= learning_rate * differentiated_b
-	return a, b
+	w = (np.array([initial_a, initial_b])).T  
+	X = np.array([(np.array([height, 1])).T for height in height_array]) 
+	y = (np.array([weight for weight in weight_array])).T 
+	df = (np.dot(X.T, (np.dot(X, w) - y)))/len(height_array)
+	w = w - learning_rate * df
+	return w
 
 def main():
 	#Read data from csv file
@@ -67,17 +64,16 @@ def main():
 	final_a = a
 	final_b = b
 	updated_mse = []
-	new_a = a
-	new_b = b
+	new_ab = np.array([a, b])
+
 	for i in range(0, max_range , 1):
-		new_a, new_b = renew_paramaters(standardized_height, standardized_weight, new_a, new_b, learning_rate)
-		new_mse = calc_mse(standardized_height, standardized_weight, new_a, new_b)
+		new_ab = renew_paramaters(standardized_height, standardized_weight, new_ab[0], new_ab[1], learning_rate)
+		new_mse = calc_mse(standardized_height, standardized_weight, new_ab[0], new_ab[1])
 		updated_mse.append(new_mse)
 		if new_mse <= mse:
 			mse = new_mse
-			final_a = new_a
-			final_b = new_b
-
+			final_a = new_ab[0]
+			final_b = new_ab[1]
 
 	estimated_weight = [final_a * height + final_b for height in standardized_height]
 
@@ -104,7 +100,7 @@ def main():
 	graph.set_ylabel("Weight")
 	graph.legend()
 
-	fig.savefig('kadai44.jpg')
+	fig.savefig('kadai45.jpg')
 
 if __name__ == '__main__':
 	main()

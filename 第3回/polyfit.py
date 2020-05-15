@@ -1,9 +1,11 @@
-#課題4-3
+#課題4-7
 import csv
 import pandas as pd
 import random
 import statistics
 import matplotlib.pyplot as plt
+import numpy as np
+from scipy.interpolate import spline
 
 def standardize(data):
 	mean = statistics.mean(data)
@@ -12,7 +14,7 @@ def standardize(data):
 
 def calc_mse(height_array, weight_array, a, b):
 	square_error = [(weight_array[height_array.index(height)]-(a * height + b))**2 for height in height_array]
-	mse = sum(square_error)/len(height_array)
+	mse = sum(square_error)/(2*len(height_array))
 	return mse
 
 def main():
@@ -28,14 +30,12 @@ def main():
 	f_weight = data[data.Gender=='Female']['Weight'].tolist()
 
 	#Bind two lists as tuple in list
-	m_weight_height = list(zip(m_weight, m_height))
-	f_weight_height = list(zip(f_weight, f_height))
+	m_weight_height = list(zip(m_height, m_weight))
+	f_weight_height = list(zip(f_height, f_weight))
 
 	#Get user's input
 	gender = input("Please input gender: ")
 	n = int(input("Please input N: "))
-	a = int(input("Please input a: "))
-	b = int(input("Please input b: "))
 
 	#Randomly choose N data to plot   
 	if gender == "female":
@@ -48,7 +48,22 @@ def main():
 	standardized_height = standardize(list(zip(*chosen_data))[0])
 	standardized_weight = standardize(list(zip(*chosen_data))[1])
 
-	print(calc_mse(standardized_height, standardized_weight, a, b))
-	
+	a, b = np.polyfit(standardized_height, standardized_weight, 1)
+	min_mse = calc_mse(standardized_height, standardized_weight, a, b)
+	estimated_weight = [a * height+ b for height in standardized_height]
+
+	print("min mse: ", min_mse)
+	print("a: ", a)
+	print("b: ", b)
+
+	#Plot graph
+	plt.scatter(standardized_height, standardized_weight, color='red', alpha=0.5, label='data')
+	plt.plot(np.array(standardized_height), np.array(estimated_weight), color='blue', alpha=0.5, label='y=ax+b')
+	plt.xlabel("Height")
+	plt.ylabel("Weight")
+	plt.legend()
+
+	plt.savefig('polyfit.jpg')
+
 if __name__ == '__main__':
 	main()
