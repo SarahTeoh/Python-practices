@@ -1,3 +1,4 @@
+#課題4-3
 import csv
 import pandas as pd
 import random

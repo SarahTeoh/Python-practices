@@ -1,3 +1,4 @@
+#課題4-4
 import csv
 import pandas as pd
 import random
@@ -23,9 +24,9 @@ def renew_paramaters(height_array, weight_array, initial_a, initial_b, learning_
 	list_for_b = [(a * height + b) - weight_array[height_array.index(height)] for height in height_array]
 	differentiated_a = sum(list_for_a) / len(height_array)
 	differentiated_b = sum(list_for_b) / len(height_array)
-	new_a = a - learning_rate * differentiated_a
-	new_b = b - learning_rate * differentiated_b
-	return new_a, new_b
+	a -= learning_rate * differentiated_a
+	b -= learning_rate * differentiated_b
+	return a, b
 
 def main():
 	#Read data from csv file
@@ -40,8 +41,8 @@ def main():
 	f_weight = data[data.Gender=='Female']['Weight'].tolist()
 
 	#Bind two lists as tuple in list
-	m_weight_height = list(zip(m_weight, m_height))
-	f_weight_height = list(zip(f_weight, f_height))
+	m_weight_height = list(zip(m_height, m_weight))
+	f_weight_height = list(zip(f_height, f_weight))
 
 	#Get user's input
 	gender = input("Please input gender: ")
@@ -68,7 +69,6 @@ def main():
 	updated_mse = []
 	new_a = a
 	new_b = b
-	#iteration_number_list = [i for i in range(0, 40, 5)]
 	for i in range(0, max_range , 1):
 		new_a, new_b = renew_paramaters(standardized_height, standardized_weight, new_a, new_b, learning_rate)
 		new_mse = calc_mse(standardized_height, standardized_weight, new_a, new_b)
@@ -104,7 +104,7 @@ def main():
 	graph.set_ylabel("Weight")
 	graph.legend()
 
-	fig.savefig('graph.jpg')
+	fig.savefig('kadai44.jpg')
 
 if __name__ == '__main__':
 	main()
