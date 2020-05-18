@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy.stats import chi2
 from scipy.stats import norm
 import numpy as np
-from collections import Counter
 import math
 
 M = 5000 #Repetition times
