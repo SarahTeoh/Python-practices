@@ -1,3 +1,4 @@
+#課題5-1
 import random
 import matplotlib.pyplot as plt
 from scipy.stats import chi2
@@ -12,9 +13,9 @@ k = int(1 + math.log2(N))
 kai_list = []
 
 for i in range(M):
-	num_list = np.random.randn(N) #N個の乱数生成
+	num_list = np.random.randn(N) #Generate N random numbers
 	bins = k
-	freq, max_of_bins = np.histogram(num_list, bins=k) # ヒストグラムを作成
+	freq, max_of_bins = np.histogram(num_list, bins=k) #Make histogram
 	expected_freq = [0]*len(freq)
 	kai =0
 	
@@ -31,6 +32,6 @@ for i in range(M):
 	kai_list.append(kai)
 
 bins = range(50)
-plt.hist(kai_list, bins=bins, density=True, label="χ^2分布") # ヒストグラムを描画
-plt.plot(bins, chi2.pdf(bins, k-1), label="自由度k-1のχ^2分布") # カイ2乗分布（自由度N-1）を描画
+plt.hist(kai_list, bins=bins, density=True, label="χ^2分布") #Plot histogram
+plt.plot(bins, chi2.pdf(bins, k-1), label="自由度k-1のχ^2分布") #Plot chi-squrare distribution (degrees of freedom N-1)
 plt.savefig("kadai51.png")
