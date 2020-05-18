@@ -9,7 +9,7 @@ import math
 
 M = 5000 #Repetition times
 N = 5000 #Number of data
-k = int(1 + math.log2(N))
+k = int(1 + math.log2(N)) #Sturges' formula
 kai_list = []
 
 for i in range(M):
