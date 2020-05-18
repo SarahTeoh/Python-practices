@@ -3,6 +3,7 @@ import random
 import matplotlib.pyplot as plt
 from scipy.stats import chi2
 from scipy.stats import norm
+from scipy.stats import chisquare
 import numpy as np
 import math
 
@@ -20,10 +21,10 @@ def calc_chi(data_array):
 			expected_freq[i] = (1 - norm.cdf(max_of_bins[i], 0, 1))*N
 		else:
 			expected_freq[i] = (norm.cdf(max_of_bins[i+1], 0, 1) - norm.cdf(max_of_bins[i], 0, 1))*N
-		
+
 	kai = [((f-e)**2)/e for f, e in zip(freq, expected_freq)]
 	kai = sum(kai)
-	return kai
+	return kai, freq, expected_freq
 
 
 def main():
@@ -35,7 +36,7 @@ def main():
 
 	for i in range(M):
 		num_list = np.random.randn(N) #Generate N random numbers
-		chi = calc_chi(num_list)
+		chi = calc_chi(num_list)[0]
 		chi_list.append(chi)
 
 	bins = range(50)
