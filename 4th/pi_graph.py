@@ -20,7 +20,7 @@ def main():
 	while True:
 		pi_list = []
 		for i in range(M):
-			#課題6-2の関数を使ってπの推定値を求める
+			#課題6-1の関数を使ってπの推定値を求める
 			pi = stimulate_pi(N)
 			pi_list.append(pi)
 		
@@ -32,13 +32,10 @@ def main():
 
 		left, right = norm.interval(alpha=0.95, loc=mean, scale=stdev)
 
-		print("a")
 		if (chi < critical_value):
 			if left > (mean - accuracy) and right < (mean + accuracy):
- 				print("broke")
  				break
 			else:
-				print("c")
 				mean_list.append(left+(right-left)/2)
 				err_list.append((right-left)/2)
 				N *= 2
