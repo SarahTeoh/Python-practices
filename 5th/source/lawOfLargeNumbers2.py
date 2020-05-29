@@ -11,14 +11,14 @@ m = 1000
 def main():
 	data = pd.read_csv('../../csv/marathon_results.csv')
 	time =  data['time'].tolist() 
-	stdev_of_all_data = np.std(time)
+	population_std = np.std(time)
 	
 	N_list = [i for i in range(100, 3000, 200)] # List of N (x-axis of graph)
 	standard_error_list = [] 
 	stdev_list = []
 
 	for n in N_list:
-		standard_error_list.append(stdev_of_all_data/math.sqrt(n))
+		standard_error_list.append(population_std/math.sqrt(n))
 		sample_mean = [] 
 		for i in range(m):
 			randomly_selected_time = random.sample(time, n) 
