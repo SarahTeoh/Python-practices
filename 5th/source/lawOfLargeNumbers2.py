@@ -1,33 +1,24 @@
 #課題7-2
-import csv
-import pandas as pd
-import random
-import numpy as np
 import math
 import matplotlib.pyplot as plt
+import lawOfLargeNumbers1
 
+# Repetition times
 m = 1000
 
 def main():
-	data = pd.read_csv('../../csv/marathon_results.csv')
-	time =  data['time'].tolist() 
-	population_std = np.std(time)
+	# Get population standard deviation, mean of sample mean, standard deviation of sample mean from another program
+	population_stdev, sample_mean_mean_to_plot, sample_mean_stdev_to_plot = lawOfLargeNumbers1.main()
+
+	# X-axis of graph
+	N_list = list(range(100, 3000, 200))
+
+	# Standard error list
+	standard_error_list = [population_stdev/math.sqrt(n) for n in N_list]
 	
-	N_list = [i for i in range(100, 3000, 200)] # List of N (x-axis of graph)
-	standard_error_list = [] 
-	stdev_list = []
-
-	for n in N_list:
-		standard_error_list.append(population_std/math.sqrt(n))
-		sample_mean = [] 
-		for i in range(m):
-			randomly_selected_time = random.sample(time, n) 
-			sample_mean.append(np.mean(randomly_selected_time))
-
-		stdev_list.append(np.std(sample_mean))
-
+	# Plot graph
 	plt.plot(N_list, standard_error_list, color="blue", marker='o', markersize=4, label="Standard Error")
-	plt.plot(N_list, stdev_list, color="red", marker='x', markersize=4, label="Std of %d samples"%m)
+	plt.plot(N_list, sample_mean_stdev_to_plot, color="red", marker='x', markersize=4, label="Std of %d samples"%m)
 	plt.legend(loc="upper right")
 	plt.xlabel("Sample Size N")
 	plt.ylabel("Standard Deviation")

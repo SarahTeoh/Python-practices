@@ -6,7 +6,7 @@ import numpy as np
 import math
 from scipy.stats import norm
 
-n = 1200
+n = 1000
 repetition = 10000
 
 def main():
@@ -14,8 +14,8 @@ def main():
 	time =  data['time'].tolist() 
 	population_mean = np.mean(time)
 	population_std = np.std(time)
-	#sample_std = population_std/math.sqrt(n)
 
+	# Number of mean that are out of 95% range
 	out_of_range = 0
 
 	for i in range(repetition):
