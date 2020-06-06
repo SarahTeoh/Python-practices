@@ -47,9 +47,9 @@ def decrypt(message, shift):
 if __name__=="__main__":
 	message = input("Please insert message: ")
 	valid, diff = check(message) # Check for unknown characters
-	shift = random.randint(1, N) # Generate key where 1 <= key <= N
 	# If no unknown characters
 	if valid:
+		shift = random.randint(1, N) # Generate key where 1 <= key <= N
 		print("shift:", shift)
 		encrypted = encrypt(message, shift)
 		print("encrypted message: ", encrypted)
