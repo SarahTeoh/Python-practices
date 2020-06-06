@@ -1,5 +1,5 @@
 #課題10-2
-from caeser_cipher import *
+from caeser_cipher import decrypt, N
 
 if __name__=="__main__":
 	with open("../data/enc_wc.txt", "r") as f:
