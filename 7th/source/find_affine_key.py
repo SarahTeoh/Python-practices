@@ -8,7 +8,7 @@ import caeser_cipher
 LETTERS = caeser_cipher.LETTERS
 N = len(LETTERS)
 
-def generate_keys(N):
+def generate_keys():
 	keyB = random.randint(1, N)
 	keyA = random.randint(2, N)
 	while find_gcd(keyA, N) != 1:
@@ -17,7 +17,7 @@ def generate_keys(N):
 	return keyA, keyB
 
 def main():
-	a, b = generate_keys(N)
+	a, b = generate_keys()
 	print("keyA: %d, keyB: %d"%(a, b))
 
 if __name__=="__main__":
