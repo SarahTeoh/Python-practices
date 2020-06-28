@@ -1,32 +1,36 @@
 #課題11-7
 import re
 
-with open("../data/english_wordlist.txt", "r") as f_eng_words:
-	eng_words = f_eng_words.read().split('\n')
+def countWords(text):
+	# Store all english words in a eng_words list
+	with open("../data/english_wordlist.txt", "r") as f_eng_words:
+		eng_words = f_eng_words.read().split('\n')
 
-def main():
-	file = input("Please input the path to textfile: ")
+	# Initialize all variables to store total number of words,
+	#number of english words 
+	#and english words 
 	total_count = 0
 	eng_count = 0
-	alphabet_only_words = []
+	eng_words_found = []
 
-	with open(file, "r") as f:
-		for line in f:
-			line = line.replace('\n', '')
-			words_list = line.split(" ")
-			total_count += len(words_list)
-			words = re.findall(r"[A-Za-z]+", line)
-			for word in words:
-				if word in eng_words:
-					alphabet_only_words.append(word)
-					eng_count += 1
+	# Replace all non-alphabetic characters with a space
+	words = re.sub('[^a-zA-Z]+', ' ', text)
 
-	print("Total words found: ", total_count)
-	print("Total english words found: ", eng_count)
+	# Split into list using space as separator
+	words_list = words.split(" ")
+	# Total number of words
+	total_count += len(words_list)
+	
+	# Check for english words in the list
+	for word in words_list:
+		if word in eng_words:
+			eng_count += 1
+			eng_words_found.append(word)
+
+	# Calculate percentage of English words
 	percentage = (eng_count*100/total_count)
-	print("%f %% English Words" %percentage)
 
-	print("words found:", alphabet_only_words)
-
-if __name__ == '__main__':
-	main()
+	print("eng_words_found: ", eng_words_found)
+	print("English Words Found: %d" % eng_count)
+	print("Total Words Found: %d" % total_count)
+	return percentage
